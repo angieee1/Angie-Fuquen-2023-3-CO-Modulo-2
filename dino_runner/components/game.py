@@ -5,6 +5,7 @@ from dino_runner.utils.constants import BG, FONT_STYLE, ICON, SCREEN_HEIGHT, SCR
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.menu import Menu
+from dino_runner.utils.text_utils import get_centered_message, get_centered_message_a, get_centered_message_b
 
 
 class Game:
@@ -25,6 +26,9 @@ class Game:
         self.menu = Menu('press any key to start...', self.screen)
         self.deatch_count = 0
         self.score = 0
+        self.best_points = 0
+
+
 
     def execute(self):
         self.running = True
@@ -37,6 +41,7 @@ class Game:
     def run(self):
         self.obstacle_manager.reset()
         self.reset_score()
+
         self.playing = True
         while self.playing:
             self.events()
@@ -76,11 +81,16 @@ class Game:
     def show_menu(self):
          helf_scree_height = SCREEN_HEIGHT // 2
          helf_scree_width = SCREEN_WIDTH // 2
-
          self.menu.reset_screen_color(self.screen)
 
          if self.deatch_count > 0:
-             self.menu.update_message('new message')
+             self.menu.update_message('GAME OVER PRESS ANY KEY TO RESTART.')
+             text, text_rect = get_centered_message(f'YOUR SCORE: {self.score} ')
+             self.screen.blit(text, text_rect)
+             text, text_rect = get_centered_message_a(f'HIGHEST: {self.best_points}')
+             self.screen.blit(text, text_rect)
+             text, text_rect = get_centered_message_b(f'TOTAL DEATHS: {self.deatch_count}')
+             self.screen.blit(text, text_rect)
 
          self.menu.draw(self.screen)
 
@@ -89,11 +99,21 @@ class Game:
              
          self.menu.update(self)
 
+    def deatch_count_a(self):
+        self.deatch_count += 1
+
 
     def update_score(self):
         self.score += 1
         if self.score % 100 == 0 and self.game_speed < 250:
             self.game_speed += 5
+
+        elif self.score > self.best_points:
+            self.best_points = self.score 
+
+    def show_best_points(self):
+        if self.player == False:
+            self.best_points
 
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
