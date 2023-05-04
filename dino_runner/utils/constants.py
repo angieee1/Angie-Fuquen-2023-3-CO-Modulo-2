@@ -1,8 +1,18 @@
 import pygame
 import os
 
+pygame.init()
+pygame.mixer.init()
+
+ruta_archivo = "C:\\Users\\fuque\\Downloads\\612069__victor_natas__moving-shadows.wav"
+
+sonido = pygame.mixer.Sound(ruta_archivo)
+sonido.play()
+
+
+
 # Global Constants
-TITLE = "Chrome Dino Runner"
+TITLE = "Chrome Dino Runner of Angie"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 FPS = 30
@@ -69,7 +79,13 @@ BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
+DEAD = pygame.image.load(os.path.join(IMG_DIR, 'C:\\Users\\fuque\\Downloads\\DinoDeadM.png'))
+
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
+HAMMER_TYPE = 'hammer'
+
 
 FONT_STYLE = 'freesansbold.ttf'
+
+IMAGE = pygame.image.load('C:\\Users\\fuque\\Downloads\\DinoDead.png')
